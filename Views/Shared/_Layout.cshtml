@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a style="font-weight:bold; font-size:22px; color:#FF4136; font-family:Audiowide" class="navbar-brand" href="/Home/Index">JUNIOR</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                @*<ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>*@
+
+                <ul class="nav navbar-nav">
+
+                    @{
+                        var userRoles = (List<string>)Session["UserRoles"];
+
+                        if (userRoles != null && userRoles.Contains("Student"))
+                        {
+                            <li><a style="color:#7FDBFF; font-size:18px" href="/Student/AddLessonToTable">საგნების არჩევა</a></li>
+                            <li><a style="color:#7FDBFF; font-size:18px" href="/Student/LessonTable">გაკვეთილების ცხრილი</a></li>
+                        }
+                        if (userRoles != null && userRoles.Contains("Teacher"))
+                        {
+                            <li><a style="color:#7FDBFF; font-size:18px" href="/Teacher/TeacherTable">ჩემი გაკვეთილები</a></li>
+                        }
+                        if (userRoles != null && userRoles.Contains("Admin"))
+                        {
+                            <li><a style="color:#7FDBFF" href="/Admin/AddLesson">გაკვეთილის დამატება</a></li>
+                            <li><a style="color:#7FDBFF" href="/Admin/AddScience">საგნის დამატება</a></li>
+                            <li><a style="color:#7FDBFF" href="/Admin/AddTeacher">მასწავლებლის დამატება</a></li>
+                            <li><a style="color:#7FDBFF" href="/Admin/ActivationTable">აქტივაცია</a></li>
+                            
+                        }
+
+                        else
+                        {
+                            <li><a style="color:#7FDBFF; font-size:18px" href="/account/SignupStudent">მოსწავლის რეგისტრაცია</a></li>
+                        }
+                    }
+
+                </ul>
+
+
+
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <li>
+                            <a>გამარჯობა @User.Identity.Name</a>
+                        </li>
+                        <li>
+                            <a href="/Account/ChangePass">პაროლის შეცვლა</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("LogOut", "Account")">
+                                <span class="glyphicon glyphicon-log-out"> გასვლა</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Login", "Account")">
+                                <span class="glyphicon glyphicon-log-in"> შესვლა</span>
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Kindergarten "Junior"</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

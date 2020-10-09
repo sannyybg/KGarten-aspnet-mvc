@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Kindergarten3.Models.LessonTableItem>
+
+@{
+    ViewBag.Title = "LessonTable";
+}
+
+<h2>ჩემი ცხრილი</h2><br>
+
+<div id="result">
+    <table class="table">
+        <tr>
+            <th>სახელწოდება</th>
+            <th>დაწყების დრო</th>
+            <th>მასწავლებელი</th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@item.LessonName</td>
+        <td>@item.StartTime</td>
+        <td><a href="/Student/TeacherDetail/@item.TeacherId">@item.TeacherName</a></td>
+        <td><a class="" id="" href="/Student/DeleteLesson/@item.TeacherId">წაშლა</a></td>
+    </tr>
+        }
+
+    </table>
+</div>
+
+
+
+
+<p>
+    @Html.ActionLink("საგნების არჩევა", "AddLessonToTable")
+</p>

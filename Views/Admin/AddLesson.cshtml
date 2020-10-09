@@ -1,0 +1,90 @@
+﻿@model Kindergarten3.Models.Lesson
+
+@{
+    ViewBag.Title = "AddLesson";
+    var sciences = (SelectList)ViewBag.ScienceId;
+    var teachers = (SelectList)ViewBag.TeacherId;
+}
+
+@{
+    var errors = ViewBag.ErrorList as List<KeyValuePair<string, ModelState>>;
+}
+
+<h2>გაკვეთილის დამატება</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.Label("მასწავლებელი", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TeacherId", teachers, new { @class = "form-control" })
+                <br>
+                <button onclick="location.href='/admin/addTeacher'" type="button" class="btn">მასწავლებლის დამატება</button>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("საგანი", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ScienceId", sciences, new { @class = "form-control" })
+                <br>
+                <button onclick="location.href='/admin/addScience'" type="button" class="btn">საგნის დამატება</button>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dayofweek, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="Dayofweek" id="cars" class="control-label col-md-2">
+                    <option value="ორშაბათი">ორშაბათი</option>
+                    <option value="სამშაბათი">სამშაბათი</option>
+                    <option value="ოთხშაბათი">ოთხშაბათი</option>
+                    <option value="ხუთშაბათი">ხუთშაბათი</option>
+                    <option value="პარასკევი">პარასკევი</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.Dayofweek, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartHour, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="time" name="StartHour" min="10:00" max="17:00" required class="control-label col-md-2">
+                @Html.ValidationMessageFor(model => model.StartHour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxStudentsCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaxStudentsCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaxStudentsCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="დამატება" class="btn btn-success"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("მთავარი გვერდი", "Index", "Admin")
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

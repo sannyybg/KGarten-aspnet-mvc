@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Kindergarten3.Models.Lesson>
+
+@{
+    ViewBag.Title = "AddLessonToTable";
+    var sciences = (SelectList)ViewBag.ScienceId;
+}
+
+
+
+<h2>საგნების არჩევა</h2>
+
+
+
+<h4>საგნების ფილტრაცია</h4>
+<form action="/Student/Search">
+    @Html.DropDownList("scienceId", sciences, new { @class = "form-control" })
+    <button class="btn btn-success" style="margin-top:4px" type="submit">ძებნა</button>
+</form><br>
+
+       <div id="addlessoninfo" class=""></div>
+
+
+<br>
+
+<div id="result">
+    <table class="table">
+        <tr>
+            <th>სახელწოდება</th>
+            <th>კვირის დღე</th>
+            <th>დაწყების დრო</th>
+            <th>სტუდ. მაქს. რაოდენობა</th>
+            <th>სტუდენტების რაოდენობა</th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.LessonName</td>
+                <td>@item.Dayofweek</td>
+                <td>@item.StartHour</td>
+                <td>@item.MaxStudentsCount</td>
+                <td>@item.StudentsCount</td>
+                @*<td>
+                    @Ajax.ActionLink("არჩევა", "AddLessonToTable", "Student", new { id = item.LessonId },
+                            new AjaxOptions
+                            {
+                                UpdateTargetId = "addresult",
+                                InsertionMode = InsertionMode.Replace,
+                                HttpMethod = "POST"
+
+                            }, new { @class = "btn btn-success" })
+                </td>*@
+
+                <td><a class="lessonaddbtn" id="@item.LessonId" href="#">არჩევა</a></td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+
+
+<p>
+    @Html.ActionLink("გაკვეთილების ცხრილი", "LessonTable", "Student")
+</p>
+
+
+
+
+
+
+
+@section scripts
+{
+    <script src="~/Scripts/myscripts/kgscript.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

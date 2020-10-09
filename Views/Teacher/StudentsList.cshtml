@@ -1,0 +1,22 @@
+﻿@model  List<string>
+
+
+@{
+    ViewBag.Title = "Studentlist";
+}
+
+    <h2>თქვენს საგანზე რეგისტტრირებული სტუდენტების სია</h2>
+    <br>
+
+
+@{
+    foreach (var item in Model)
+    {
+        <h3>@item</h3>
+    }
+}
+
+
+<div>
+    @Html.ActionLink("მთავარი გვერდი", "Index", "Admin")
+</div>
